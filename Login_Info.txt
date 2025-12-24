@@ -1,0 +1,11 @@
+Student Name: Ahmed Ezzat Allam
+Project: Restaurant System
+
+--- Login Credentials ---
+Admin Email: Ahmed Ezzat
+Password: 2004
+
+User Email: ahmed@gmail.com
+Password: 123
+
+* Note: Please run the SQL script first to load the database.
