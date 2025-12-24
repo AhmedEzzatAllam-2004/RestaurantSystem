@@ -1,0 +1,89 @@
+﻿@model RestaurantSystem.Models.OrderDetail
+
+@{
+    ViewData["Title"] = "Edit Item";
+}
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .form-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        border: none;
+        border-top: 5px solid #ffc107; /* أصفر للتعديل */
+    }
+
+    .form-header {
+        padding: 25px;
+        text-align: center;
+        background: #fff3cd;
+        border-bottom: 1px dashed #ffeeba;
+    }
+
+    .form-select {
+        height: 58px;
+        border-radius: 30px;
+        padding-left: 20px;
+    }
+
+    .form-floating > label {
+        left: 10px;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card form-card">
+                <div class="form-header">
+                    <h3 class="fw-bold mb-0 text-dark"><i class="fas fa-edit me-2"></i>Update Quantity</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <input type="hidden" asp-for="OrderId" />
+                        <input type="hidden" asp-for="ItemId" />
+
+                        <div class="alert alert-info text-center">
+                            Updating items for Order #@Model.OrderId
+                        </div>
+
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Quantity" class="form-control rounded-pill px-4" />
+                                    <label asp-for="Quantity" class="px-4">Quantity</label>
+                                    <span asp-validation-for="Quantity" class="text-danger small ms-3"></span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Price" class="form-control rounded-pill px-4" />
+                                    <label asp-for="Price" class="px-4">Price</label>
+                                    <span asp-validation-for="Price" class="text-danger small ms-3"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-warning rounded-pill py-2 fw-bold shadow-sm">
+                                <i class="fas fa-save me-2"></i> Save Changes
+                            </button>
+                            <a asp-action="Index" class="btn btn-light rounded-pill py-2 border">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+ }

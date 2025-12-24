@@ -1,0 +1,73 @@
+﻿@model IEnumerable<RestaurantSystem.Models.Admin>
+
+@{
+    ViewData["Title"] = "System Admins";
+}
+
+<style>
+    body {
+        background-color: #f0f2f5;
+    }
+
+    .admin-card {
+        background: white;
+        border-left: 5px solid #2c3e50; /* لون غامق */
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        transition: 0.3s;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+        .admin-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+    .admin-icon {
+        width: 60px;
+        height: 60px;
+        background: #2c3e50;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1 class="fw-bold"><i class="fas fa-user-shield text-dark me-2"></i>Security Admins</h1>
+        <a asp-action="Create" class="btn btn-dark rounded-pill px-4 shadow-sm">
+            <i class="fas fa-user-plus me-2"></i> New Admin
+        </a>
+    </div>
+
+    <div class="row g-3">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-6">
+                <div class="admin-card">
+                    <div class="d-flex align-items-center">
+                        <div class="admin-icon me-3">
+                            <i class="fas fa-user-lock"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold mb-0">@item.Username</h5>
+                            <small class="text-muted">Administrator</small>
+                        </div>
+                    </div>
+
+                    <div class="btn-group">
+                        <a asp-action="Edit" asp-route-id="@item.AdminId" class="btn btn-sm btn-outline-secondary border-0"><i class="fas fa-pen"></i></a>
+                        <a asp-action="Delete" asp-route-id="@item.AdminId" class="btn btn-sm btn-outline-danger border-0"><i class="fas fa-trash"></i></a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,119 @@
+﻿@model IEnumerable<RestaurantSystem.Models.Customer>
+
+@{
+    ViewData["Title"] = "Our Customers";
+}
+
+<style>
+    body {
+        background-color: #f0f2f5;
+    }
+
+    /* كارت العميل */
+    .customer-card {
+        background: white;
+        border: none;
+        border-radius: 20px;
+        padding: 30px 20px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .customer-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+    /* الديكور العلوي الملون */
+    .card-top-decoration {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 8px;
+        background: linear-gradient(90deg, #00c6ff, #0072ff);
+    }
+
+    /* دائرة الصورة */
+    .avatar-circle {
+        width: 80px;
+        height: 80px;
+        background: #eef2f3;
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: #0072ff;
+        border: 3px solid white;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .info-item {
+        background: #f8f9fa;
+        padding: 8px 15px;
+        border-radius: 50px;
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+        color: #555;
+    }
+</style>
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <div>
+            <h1 class="fw-bold text-dark">👥 Customer Base</h1>
+            <p class="text-muted">Manage your client relationships</p>
+        </div>
+        <a asp-action="Create" class="btn btn-primary rounded-pill px-4 shadow-sm">
+            <i class="fas fa-user-plus me-2"></i> Add Customer
+        </a>
+    </div>
+
+    <div class="row g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-6">
+                <div class="customer-card h-100">
+                    <div class="card-top-decoration"></div>
+
+                    <div class="avatar-circle">
+                        <i class="fas fa-user"></i>
+                    </div>
+
+                    <h5 class="fw-bold text-dark mb-1">@item.Name</h5>
+                    <p class="text-muted small mb-4">Customer ID: #@item.CustomerId</p>
+
+                    <div class="d-flex flex-column gap-2 mb-4">
+                        <div class="info-item">
+                            <i class="fas fa-envelope text-primary me-2"></i>
+                            @(item.Email ?? "No Email")
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone-alt text-success me-2"></i>
+                            @(item.Phone ?? "No Phone")
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center gap-2">
+                        <a asp-action="Edit" asp-route-id="@item.CustomerId" class="btn btn-outline-warning btn-sm rounded-circle" title="Edit">
+                            <i class="fas fa-pen"></i>
+                        </a>
+                        <a asp-action="Details" asp-route-id="@item.CustomerId" class="btn btn-outline-info btn-sm rounded-circle" title="Profile">
+                            <i class="fas fa-id-card"></i>
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.CustomerId" class="btn btn-outline-danger btn-sm rounded-circle" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>

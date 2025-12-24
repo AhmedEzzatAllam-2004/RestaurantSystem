@@ -1,0 +1,77 @@
+﻿@model IEnumerable<RestaurantSystem.Models.MenuItem>
+
+@{
+    ViewData["Title"] = "Our Menu";
+}
+
+<style>
+    .menu-card {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 20px;
+        background: white;
+        text-align: center;
+        transition: 0.3s;
+    }
+
+        .menu-card:hover {
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+
+    .price-badge {
+        background-color: #28a745;
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-weight: bold;
+    }
+
+    .btn-cart {
+        background-color: #ff6b6b;
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        display: inline-block;
+        margin-top: 10px;
+    }
+
+        .btn-cart:hover {
+            background-color: #ff4757;
+            color: white;
+        }
+</style>
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1>🍔 Our Menu</h1>
+        <a asp-controller="ShoppingCart" asp-action="Index" class="btn btn-primary">
+            Go to Cart 🛒
+        </a>
+    </div>
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="menu-card h-100">
+                    <h3>@item.Name</h3>
+                    <p class="text-muted">Delicious meal for you</p>
+
+                    <div class="mb-3">
+                        <span class="price-badge">@item.Price EGP</span>
+                    </div>
+
+                    <a asp-controller="ShoppingCart"
+                       asp-action="AddToCart"
+                       asp-route-itemId="@item.ItemId"
+                       class="btn-cart">
+                        Add to Cart 🛒
+                    </a>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>

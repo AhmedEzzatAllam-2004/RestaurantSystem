@@ -1,0 +1,120 @@
+﻿@model IEnumerable<RestaurantSystem.Models.DeliveryAgent>
+
+@{
+    ViewData["Title"] = "Delivery Fleet";
+}
+
+<style>
+    body {
+        background-color: #f4f6f9;
+    }
+
+    /* كارت الطيار */
+    .rider-card {
+        background: white;
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        transition: transform 0.3s;
+        position: relative;
+    }
+
+        .rider-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+    /* الجزء العلوي (المركبة) */
+    .card-header-vehicle {
+        height: 100px;
+        background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%); /* برتقالي */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3.5rem;
+        color: rgba(255,255,255,0.8);
+    }
+
+    /* بادج نوع المركبة */
+    .vehicle-badge {
+        background: #343a40;
+        color: #ffc107;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        position: absolute;
+        top: 85px; /* عشان يبقى بين الهيدر والجسم */
+        left: 50%;
+        transform: translateX(-50%);
+        box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    }
+
+    .rider-info {
+        padding-top: 25px;
+        text-align: center;
+    }
+</style>
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <div>
+            <h1 class="fw-bold"><i class="fas fa-motorcycle text-warning me-2"></i>Delivery Fleet</h1>
+            <p class="text-muted">Manage your riders and drivers</p>
+        </div>
+        <a asp-action="Create" class="btn btn-warning text-dark fw-bold rounded-pill px-4 shadow-sm">
+            <i class="fas fa-plus me-2"></i> Add Rider
+        </a>
+    </div>
+
+    <div class="row g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="rider-card h-100 pb-3">
+
+                    <div class="card-header-vehicle">
+                        @if (item.VehicleType != null && item.VehicleType.ToLower().Contains("car"))
+                        {
+                            <i class="fas fa-car-side"></i>
+                        }
+                        else
+                        {
+                            <i class="fas fa-motorcycle"></i>
+                        }
+                    </div>
+
+                    <div class="vehicle-badge">
+                        @(item.VehicleType ?? "Unknown")
+                    </div>
+
+                    <div class="card-body rider-info">
+                        <h5 class="fw-bold mb-1">@item.Name</h5>
+                        <p class="text-muted small mb-3">ID: #@item.AgentId</p>
+
+                        <a href="tel:@item.Phone" class="btn btn-light btn-sm w-100 mb-3 border">
+                            <i class="fas fa-phone-alt text-success me-2"></i> @(item.Phone ?? "No Phone")
+                        </a>
+
+                        <hr class="opacity-25 my-3">
+
+                        <div class="d-flex justify-content-center gap-2">
+                            <a asp-action="Edit" asp-route-id="@item.AgentId" class="text-warning" title="Edit">
+                                <i class="fas fa-edit fa-lg"></i>
+                            </a>
+                            <a asp-action="Details" asp-route-id="@item.AgentId" class="text-info" title="Details">
+                                <i class="fas fa-info-circle fa-lg"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.AgentId" class="text-danger" title="Delete">
+                                <i class="fas fa-trash-alt fa-lg"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>

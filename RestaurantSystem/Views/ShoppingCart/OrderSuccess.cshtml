@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Order Success";
+}
+
+<div class="container py-5 text-center">
+    <div class="card shadow-lg p-5 border-0 rounded-3 mt-5">
+        <div class="mb-4">
+            <i class="fas fa-check-circle text-success" style="font-size: 6rem;"></i>
+        </div>
+        <h1 class="fw-bold text-success display-4">Order Placed Successfully! 🎉</h1>
+        <p class="lead text-muted mt-3">Thank you for your order. Your delicious food is being prepared now!</p>
+
+        <hr class="my-5 w-50 mx-auto" />
+
+        <a asp-controller="Home" asp-action="Menu" class="btn btn-primary btn-lg rounded-pill px-5 shadow">
+            <i class="fas fa-utensils me-2"></i> Back to Menu
+        </a>
+    </div>
+</div>

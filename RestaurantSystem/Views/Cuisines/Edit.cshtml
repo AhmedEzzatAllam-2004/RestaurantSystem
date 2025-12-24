@@ -1,0 +1,67 @@
+﻿@model RestaurantSystem.Models.Cuisine
+
+@{
+    ViewData["Title"] = "Edit Cuisine";
+}
+
+<style>
+    body {
+        background-color: #fff8e1;
+    }
+
+    .form-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        border: none;
+        overflow: hidden;
+    }
+
+    .form-header {
+        background: linear-gradient(135deg, #FF512F 0%, #DD2476 100%); /* أحمر غامق */
+        padding: 25px;
+        color: white;
+        text-align: center;
+    }
+
+    .form-floating > label {
+        left: 10px;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card form-card">
+                <div class="form-header">
+                    <h3 class="fw-bold mb-0"><i class="fas fa-pen-nib me-2"></i>Edit Cuisine</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <input type="hidden" asp-for="CuisineId" />
+
+                        <div class="form-floating mb-4">
+                            <input asp-for="Name" class="form-control rounded-pill px-4" placeholder="Cuisine Name" />
+                            <label asp-for="Name" class="px-4"><i class="fas fa-utensils me-2"></i>Cuisine Name</label>
+                            <span asp-validation-for="Name" class="text-danger small ms-3"></span>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-danger rounded-pill py-2 fw-bold shadow-sm" style="background: #DD2476; border:none;">
+                                <i class="fas fa-save me-2"></i> Save Changes
+                            </button>
+                            <a asp-action="Index" class="btn btn-light rounded-pill py-2 border">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+ }

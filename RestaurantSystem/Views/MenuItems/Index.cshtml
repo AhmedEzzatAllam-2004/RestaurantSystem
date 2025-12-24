@@ -1,0 +1,149 @@
+﻿@model IEnumerable<RestaurantSystem.Models.MenuItem>
+
+@{
+    ViewData["Title"] = "Menu Gallery";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+<style>
+    /* خلفية متدرجة مختلفة شوية للمنيو */
+    body {
+        background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+        min-height: 100vh;
+    }
+
+    /* كارت المنيو */
+    .menu-card {
+        border: none;
+        border-radius: 20px;
+        background: #fff;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        transition: all 0.4s ease;
+        overflow: hidden;
+        position: relative;
+    }
+
+    /* تأثير الـ Hover */
+    .menu-card:hover {
+        transform: translateY(-10px) rotateX(2deg);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    /* الجزء العلوي الملون */
+    .card-header-img {
+        height: 120px;
+        background: linear-gradient(45deg, #ff9966, #ff5e62);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    /* أيقونة الأكل */
+    .food-icon {
+        font-size: 3.5rem;
+        color: white;
+        transition: transform 0.5s;
+    }
+    .menu-card:hover .food-icon {
+        transform: rotate(20deg) scale(1.1);
+    }
+
+    /* بادج السعر */
+    .price-badge {
+        position: absolute;
+        bottom: -20px;
+        right: 20px;
+        background: #28a745; /* أخضر */
+        color: white;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.1rem;
+        border: 4px solid #fff;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        z-index: 5;
+    }
+
+    /* زرار الإضافة العائم */
+    .btn-floating {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 100;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+</style>
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-5 animate__animated animate__fadeInDown">
+        <div>
+            <h1 class="fw-bold text-dark"><i class="fas fa-hamburger text-warning me-2"></i>Delicious Menu</h1>
+            <p class="text-muted">Explore our tasty dishes</p>
+        </div>
+        <a asp-action="Create" class="btn btn-dark btn-lg rounded-pill px-4 shadow-sm hover-effect">
+            <i class="fas fa-plus me-2"></i> Add Item
+        </a>
+    </div>
+
+    <div class="row g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 animate__animated animate__fadeInUp">
+                <div class="card menu-card h-100">
+
+                    <div class="card-header-img">
+                        <i class="fas fa-utensils food-icon"></i>
+                        <div class="price-badge">
+                            $@item.Price
+                        </div>
+                    </div>
+
+                    <div class="card-body text-center pt-4">
+                        <h4 class="fw-bold text-dark mt-2">@item.Name</h4>
+
+                        <div class="d-flex justify-content-center gap-2 my-3">
+                            <span class="badge bg-light text-dark border">
+                                <i class="fas fa-tag text-muted"></i> @item.Category?.CategoryId
+                            </span>
+                            <span class="badge bg-light text-dark border">
+                                <i class="fas fa-store-alt text-muted"></i> @item.Branch?.BranchId
+                            </span>
+                        </div>
+
+                        <hr class="text-muted opacity-25">
+
+                        <div class="d-flex justify-content-center gap-3">
+                            <a asp-action="Edit" asp-route-id="@item.ItemId" class="text-warning" title="Edit">
+                                <i class="fas fa-edit fa-lg"></i>
+                            </a>
+                            <a asp-action="Details" asp-route-id="@item.ItemId" class="text-info" title="Details">
+                                <i class="fas fa-info-circle fa-lg"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.ItemId" class="text-danger" title="Delete">
+                                <i class="fas fa-trash fa-lg"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<a asp-action="Create" class="btn btn-success btn-floating animate__animated animate__zoomIn">
+    <i class="fas fa-plus fa-lg"></i>
+</a>

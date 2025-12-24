@@ -1,0 +1,120 @@
+﻿@model IEnumerable<RestaurantSystem.Models.Order>
+
+@{
+    ViewData["Title"] = "Live Orders";
+}
+
+<style>
+    body {
+        background-color: #eef2f3;
+    }
+
+    /* تصميم تيكت الطلب */
+    .order-ticket {
+        background: #fff;
+        border-radius: 10px;
+        position: relative;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: transform 0.3s;
+        border-top: 5px solid #0d6efd; /* لون أزرق مميز من فوق */
+    }
+
+        .order-ticket:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+    /* خرم التيكت (شكل جمالي) */
+    .ticket-hole {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 15px;
+        height: 15px;
+        background: #eef2f3;
+        border-radius: 50%;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .price-display {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #198754; /* أخضر للفلوووس */
+    }
+
+    .date-badge {
+        background: #f8f9fa;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        color: #6c757d;
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <div>
+            <h1 class="fw-bold"><i class="fas fa-clipboard-list text-primary me-2"></i>Order Monitor</h1>
+            <p class="text-muted">Track incoming orders live</p>
+        </div>
+        <a asp-action="Create" class="btn btn-dark rounded-pill px-4">
+            <i class="fas fa-plus me-2"></i> New Order
+        </a>
+    </div>
+
+    <div class="row g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-4 col-md-6">
+                <div class="order-ticket h-100 d-flex flex-column">
+                    <div class="ticket-hole"></div>
+
+                    <div class="mb-3">
+                        <span class="badge bg-primary mb-2">Order #@item.OrderId</span>
+                        <br />
+                        <span class="date-badge">
+                            <i class="far fa-clock me-1"></i> @item.OrderDate
+                        </span>
+                    </div>
+
+                    <div class="flex-grow-1">
+                        <h5 class="fw-bold text-dark">
+                            <i class="fas fa-user-circle text-secondary me-2"></i>
+                            @(item.Customer != null ? item.Customer.Name : "Unknown Customer")
+                        </h5>
+                        <p class="text-muted small mb-1">
+                            <i class="fas fa-map-marker-alt me-2 text-danger"></i>
+                            Branch: @(item.Branch != null ? item.Branch.Location : "Main Branch")
+                        </p>
+                    </div>
+
+                    <hr class="border-secondary opacity-25" />
+
+                    <div class="d-flex justify-content-between align-items-end">
+                        <div>
+                            <small class="text-muted d-block">Total Amount</small>
+                            <span class="price-display">$@item.TotalAmount</span>
+                        </div>
+
+                        <div class="btn-group">
+                            <a asp-action="Edit" asp-route-id="@item.OrderId" class="btn btn-outline-warning btn-sm" title="Edit">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                            <a asp-action="Details" asp-route-id="@item.OrderId" class="btn btn-outline-info btn-sm" title="Details">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.OrderId" class="btn btn-outline-danger btn-sm" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>

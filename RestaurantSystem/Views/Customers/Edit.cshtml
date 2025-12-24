@@ -1,0 +1,86 @@
+﻿@model RestaurantSystem.Models.Customer
+
+@{
+    ViewData["Title"] = "Edit Customer";
+}
+
+<style>
+    body {
+        background-color: #f0f2f5;
+    }
+
+    .form-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        border: none;
+        overflow: hidden;
+    }
+
+    .form-header {
+        background: linear-gradient(135deg, #36d1dc 0%, #5b86e5 100%); /* أزرق فاتح */
+        padding: 30px;
+        color: white;
+        text-align: center;
+    }
+
+    .form-floating > label {
+        left: 10px;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card form-card">
+                <div class="form-header">
+                    <h2 class="fw-bold mb-0"><i class="fas fa-user-edit me-2"></i>Edit Profile</h2>
+                    <p class="mb-0 opacity-75">Update information for @Model.Name</p>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <input type="hidden" asp-for="CustomerId" />
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Name" class="form-control rounded-pill px-4" placeholder="Name" />
+                            <label asp-for="Name" class="px-4"><i class="fas fa-user me-2"></i>Full Name</label>
+                            <span asp-validation-for="Name" class="text-danger small ms-3"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Email" class="form-control rounded-pill px-4" placeholder="Email" />
+                            <label asp-for="Email" class="px-4"><i class="fas fa-envelope me-2"></i>Email</label>
+                            <span asp-validation-for="Email" class="text-danger small ms-3"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Phone" class="form-control rounded-pill px-4" placeholder="Phone" />
+                            <label asp-for="Phone" class="px-4"><i class="fas fa-phone me-2"></i>Phone</label>
+                            <span asp-validation-for="Phone" class="text-danger small ms-3"></span>
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <input asp-for="Password" class="form-control rounded-pill px-4" placeholder="Password" />
+                            <label asp-for="Password" class="px-4"><i class="fas fa-lock me-2"></i>Password</label>
+                            <span asp-validation-for="Password" class="text-danger small ms-3"></span>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-info text-white rounded-pill py-3 fw-bold shadow-sm">
+                                <i class="fas fa-save me-2"></i> Save Changes
+                            </button>
+                            <a asp-action="Index" class="btn btn-light rounded-pill py-3 fw-bold border">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+ }

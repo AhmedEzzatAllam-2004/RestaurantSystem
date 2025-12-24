@@ -1,0 +1,88 @@
+﻿@model RestaurantSystem.Models.Delivery
+
+@{
+    ViewData["Title"] = "Update Delivery";
+}
+
+<style>
+    body {
+        background-color: #e3f2fd;
+    }
+
+    .form-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        border: none;
+        overflow: hidden;
+    }
+
+    .form-header {
+        background: linear-gradient(135deg, #373b44 0%, #4286f4 100%); /* أزرق غامق */
+        padding: 30px;
+        color: white;
+        text-align: center;
+    }
+
+    .form-select {
+        height: 58px;
+        border-radius: 30px;
+        padding-left: 20px;
+    }
+
+    .form-floating > label {
+        left: 10px;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card form-card">
+                <div class="form-header">
+                    <h3 class="fw-bold mb-0"><i class="fas fa-tasks me-2"></i>Update Status</h3>
+                    <p class="mb-0 opacity-75">Track delivery progress</p>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <input type="hidden" asp-for="DeliveryId" />
+
+                        <div class="form-floating mb-3">
+                            <select asp-for="OrderId" class="form-select" asp-items="ViewBag.OrderId"></select>
+                            <label asp-for="OrderId" class="px-4"><i class="fas fa-box me-2"></i>Order Ref</label>
+                            <span asp-validation-for="OrderId" class="text-danger small ms-3"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <select asp-for="AgentId" class="form-select" asp-items="ViewBag.AgentId">
+                                <option value="">-- Select Rider --</option>
+                            </select>
+                            <label asp-for="AgentId" class="px-4"><i class="fas fa-biking me-2"></i>Assigned Rider</label>
+                            <span asp-validation-for="AgentId" class="text-danger small ms-3"></span>
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <input asp-for="Status" class="form-control rounded-pill px-4" placeholder="Status" />
+                            <label asp-for="Status" class="px-4"><i class="fas fa-check-double me-2"></i>Current Status</label>
+                            <span asp-validation-for="Status" class="text-danger small ms-3"></span>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary rounded-pill py-2 fw-bold shadow-sm">
+                                <i class="fas fa-save me-2"></i> Update Delivery
+                            </button>
+                            <a asp-action="Index" class="btn btn-light rounded-pill py-2 border">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+ }

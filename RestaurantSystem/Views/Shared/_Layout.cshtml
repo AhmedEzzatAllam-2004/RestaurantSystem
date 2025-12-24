@@ -1,0 +1,118 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - RestaurantSystem</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/RestaurantSystem.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+    <style>
+        .navbar-nav .nav-link {
+            padding-left: 8px !important;
+            padding-right: 8px !important;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bold text-primary" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-utensils"></i> System
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+
+                    <ul class="navbar-nav flex-grow-1 align-items-center">
+
+                        @{
+                            // قراءة بيانات المستخدم من الجلسة
+                            var userRole = HttpContextAccessor.HttpContext.Session.GetString("Role");
+                            var userName = HttpContextAccessor.HttpContext.Session.GetString("Name");
+                        }
+
+                        @if (userRole != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-success fw-bold border rounded px-2 bg-light mx-2" asp-controller="Home" asp-action="Menu">🛒 Buy</a>
+                            </li>
+                        }
+
+                        @if (userRole == "Admin")
+                        {
+                            <li class="nav-item text-muted">|</li>
+
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Restaurants" asp-action="Index">Resturants</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="MenuItems" asp-action="Index">Menu</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Orders" asp-action="Index">Orders</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="Customers" asp-action="Index">Customers</a></li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-primary fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    More Data
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" asp-controller="Admins" asp-action="Index">Admins</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Branches" asp-action="Index">Branches</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Categories" asp-action="Index">Categories</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Cuisines" asp-action="Index">Cuisines</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" asp-controller="Deliveries" asp-action="Index">Deliveries Table</a></li>
+                                    <li><a class="dropdown-item" asp-controller="DeliveryAgents" asp-action="Index">Delivery Agents</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Addresses" asp-action="Index">Addresses</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Payments" asp-action="Index">Payments</a></li>
+                                    <li><a class="dropdown-item" asp-controller="OrderDetails" asp-action="Index">Order Details</a></li>
+                                </ul>
+                            </li>
+                        }
+
+                    </ul>
+
+                    <div class="d-flex align-items-center ms-auto">
+                        @if (userRole != null)
+                        {
+                            <span class="me-3 fw-bold text-secondary small">Hi, @userName</span>
+                            <a asp-controller="Account" asp-action="Logout" class="btn btn-sm btn-outline-danger rounded-pill px-3">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Account" asp-action="Login" class="btn btn-sm btn-primary rounded-pill px-4 fw-bold">Login</a>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - RestaurantSystem
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

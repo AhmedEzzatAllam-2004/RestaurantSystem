@@ -1,0 +1,87 @@
+﻿@model IEnumerable<RestaurantSystem.Models.Payment>
+
+@{
+    ViewData["Title"] = "Payment History";
+}
+
+<style>
+    .table-custom {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    }
+
+        .table-custom thead {
+            background: linear-gradient(45deg, #11998e, #38ef7d); /* أخضر مالي */
+            color: white;
+        }
+
+        .table-custom th, .table-custom td {
+            padding: 15px 20px;
+            vertical-align: middle;
+        }
+
+    .status-badge {
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1 class="fw-bold"><i class="fas fa-file-invoice-dollar text-success me-2"></i>Transactions</h1>
+        <a asp-action="Create" class="btn btn-success rounded-pill px-4 shadow-sm">
+            <i class="fas fa-plus me-2"></i> Record Payment
+        </a>
+    </div>
+
+    <div class="table-responsive table-custom">
+        <table class="table mb-0 table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Amount</th>
+                    <th>Method</th>
+                    <th>Status</th>
+                    <th>Order Ref</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>#@item.PaymentId</td>
+                        <td class="fw-bold text-success">$@item.Amount</td>
+                        <td>
+                            <i class="fas @(item.Method != null && item.Method.ToLower().Contains("card") ? "fa-credit-card" : "fa-money-bill") me-2 text-muted"></i>
+                            @item.Method
+                        </td>
+                        <td>
+                            @if (item.Status != null && item.Status.ToLower().Contains("paid"))
+                            {
+                                <span class="badge bg-success status-badge">PAID</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-warning text-dark status-badge">PENDING</span>
+                            }
+                        </td>
+                        <td>
+                            <a asp-controller="Orders" asp-action="Details" asp-route-id="@item.OrderId" class="text-decoration-none fw-bold">
+                                View Order
+                            </a>
+                        </td>
+                        <td class="text-end">
+                            <a asp-action="Edit" asp-route-id="@item.PaymentId" class="btn btn-sm btn-light text-primary"><i class="fas fa-pen"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.PaymentId" class="btn btn-sm btn-light text-danger"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

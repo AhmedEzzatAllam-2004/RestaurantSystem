@@ -1,0 +1,92 @@
+﻿@model RestaurantSystem.Models.OrderDetail
+
+@{
+    ViewData["Title"] = "Add Item to Order";
+}
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .form-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        border: none;
+        border-top: 5px solid #6c757d; /* لون رمادي فاتورة */
+    }
+
+    .form-header {
+        padding: 25px;
+        text-align: center;
+        background: #f8f9fa;
+        border-bottom: 1px dashed #ccc;
+    }
+
+    .form-select {
+        height: 58px;
+        border-radius: 30px;
+        padding-left: 20px;
+    }
+
+    .form-floating > label {
+        left: 10px;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card form-card">
+                <div class="form-header">
+                    <h3 class="fw-bold mb-0 text-secondary"><i class="fas fa-receipt me-2"></i>Add Line Item</h3>
+                    <small class="text-muted">Add a specific dish to an order</small>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="form-floating mb-3">
+                            <select asp-for="OrderId" class="form-select" asp-items="ViewBag.OrderId"></select>
+                            <label asp-for="OrderId" class="px-4"><i class="fas fa-hashtag me-2"></i>Select Order</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <select asp-for="ItemId" class="form-select" asp-items="ViewBag.ItemId"></select>
+                            <label asp-for="ItemId" class="px-4"><i class="fas fa-utensils me-2"></i>Menu Item</label>
+                        </div>
+
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Quantity" class="form-control rounded-pill px-4" placeholder="Qty" type="number" min="1" />
+                                    <label asp-for="Quantity" class="px-4"><i class="fas fa-sort-numeric-up me-1"></i>Qty</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Price" class="form-control rounded-pill px-4" placeholder="Price" type="number" step="0.01" />
+                                    <label asp-for="Price" class="px-4"><i class="fas fa-dollar-sign me-1"></i>Price</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-2">
+                            <button type="submit" class="btn btn-secondary rounded-pill py-2 fw-bold shadow-sm">
+                                <i class="fas fa-plus me-2"></i> Add Item
+                            </button>
+                            <a asp-action="Index" class="btn btn-light rounded-pill py-2 border">Back</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+ }

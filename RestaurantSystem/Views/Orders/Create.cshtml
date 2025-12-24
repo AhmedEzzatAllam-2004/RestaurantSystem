@@ -1,0 +1,96 @@
+﻿@model RestaurantSystem.Models.Order
+
+@{
+    ViewData["Title"] = "New Order";
+}
+
+<style>
+    body {
+        background-color: #eef2f3;
+    }
+
+    .form-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        border: none;
+        overflow: hidden;
+    }
+
+    .form-header {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); /* أخضر كاشير */
+        padding: 30px;
+        color: white;
+        text-align: center;
+    }
+
+    .form-select {
+        height: 58px;
+        border-radius: 30px;
+        padding-left: 20px;
+    }
+
+    .form-floating > label {
+        left: 10px;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card form-card">
+                <div class="form-header">
+                    <h2 class="fw-bold mb-0"><i class="fas fa-cash-register me-2"></i>New Order</h2>
+                    <p class="mb-0 opacity-75">Create a new transaction</p>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="OrderDate" class="form-control rounded-pill px-4" />
+                            <label asp-for="OrderDate" class="px-4"><i class="fas fa-calendar-alt me-2 text-success"></i>Date</label>
+                            <span asp-validation-for="OrderDate" class="text-danger small ms-3"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="TotalAmount" class="form-control rounded-pill px-4" placeholder="Amount" type="number" step="0.01" />
+                            <label asp-for="TotalAmount" class="px-4"><i class="fas fa-money-bill-wave me-2 text-success"></i>Total Amount</label>
+                            <span asp-validation-for="TotalAmount" class="text-danger small ms-3"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <select asp-for="CustomerId" class="form-select" asp-items="ViewBag.CustomerId"></select>
+                            <label asp-for="CustomerId" class="px-4"><i class="fas fa-user me-2 text-primary"></i>Customer</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <select asp-for="BranchId" class="form-select" asp-items="ViewBag.BranchId"></select>
+                            <label asp-for="BranchId" class="px-4"><i class="fas fa-store me-2 text-warning"></i>Branch</label>
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <select asp-for="PromoId" class="form-select" asp-items="ViewBag.PromoId">
+                                <option value="">-- No Promo Code --</option>
+                            </select>
+                            <label asp-for="PromoId" class="px-4"><i class="fas fa-tag me-2 text-danger"></i>Promo Code</label>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success rounded-pill py-3 fw-bold shadow-sm">
+                                <i class="fas fa-check-circle me-2"></i> Place Order
+                            </button>
+                            <a asp-action="Index" class="btn btn-light rounded-pill py-3 fw-bold border">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+ }

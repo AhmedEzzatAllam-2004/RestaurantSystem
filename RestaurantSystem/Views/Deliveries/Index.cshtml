@@ -1,0 +1,106 @@
+﻿@model IEnumerable<RestaurantSystem.Models.Delivery>
+
+@{
+    ViewData["Title"] = "Delivery Tracking";
+}
+
+<style>
+    body {
+        background-color: #e3f2fd;
+    }
+
+    .tracking-card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-left: 5px solid #2196f3; /* أزرق */
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        transition: 0.3s;
+    }
+
+        .tracking-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+    .status-badge {
+        font-size: 0.8rem;
+        padding: 5px 10px;
+        border-radius: 20px;
+    }
+
+    .status-pending {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .status-shipping {
+        background: #cce5ff;
+        color: #004085;
+    }
+
+    .status-delivered {
+        background: #d4edda;
+        color: #155724;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1 class="fw-bold"><i class="fas fa-truck-fast text-primary me-2"></i>Shipment Tracking</h1>
+        <a asp-action="Create" class="btn btn-primary rounded-pill px-4 shadow-sm">
+            <i class="fas fa-shipping-fast me-2"></i> New Shipment
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            @foreach (var item in Model)
+            {
+                <div class="tracking-card d-flex align-items-center justify-content-between flex-wrap gap-3">
+
+                    <div class="d-flex align-items-center">
+                        <div class="bg-light rounded-circle p-3 me-3 text-primary">
+                            <i class="fas fa-box-open fa-lg"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold mb-0">Delivery #@item.DeliveryId</h5>
+                            <small class="text-muted">Order Ref: #@item.OrderId</small>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center" style="min-width: 200px;">
+                        <i class="fas fa-biking text-secondary me-2"></i>
+                        <div>
+                            <span class="d-block small text-muted">Assigned Rider</span>
+                            <span class="fw-bold">@(item.Agent?.Name ?? "Unassigned")</span>
+                        </div>
+                    </div>
+
+                    <div style="min-width: 120px; text-align:center;">
+                        @{
+                            var statusClass = "status-pending";
+                            var icon = "fa-clock";
+                            if (item.Status != null)
+                            {
+                                if (item.Status.ToLower().Contains("way") || item.Status.ToLower().Contains("ship")) { statusClass = "status-shipping"; icon = "fa-truck"; }
+                                if (item.Status.ToLower().Contains("done") || item.Status.ToLower().Contains("deliv")) { statusClass = "status-delivered"; icon = "fa-check-circle"; }
+                            }
+                        }
+                        <span class="status-badge @statusClass">
+                            <i class="fas @icon me-1"></i> @(item.Status ?? "Pending")
+                        </span>
+                    </div>
+
+                    <div class="btn-group">
+                        <a asp-action="Edit" asp-route-id="@item.DeliveryId" class="btn btn-sm btn-outline-primary border-0"><i class="fas fa-edit"></i></a>
+                        <a asp-action="Details" asp-route-id="@item.DeliveryId" class="btn btn-sm btn-outline-info border-0"><i class="fas fa-info-circle"></i></a>
+                        <a asp-action="Delete" asp-route-id="@item.DeliveryId" class="btn btn-sm btn-outline-danger border-0"><i class="fas fa-trash"></i></a>
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>

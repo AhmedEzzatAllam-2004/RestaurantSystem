@@ -1,0 +1,80 @@
+﻿@model IEnumerable<RestaurantSystem.Models.Branch>
+
+@{
+    ViewData["Title"] = "Our Branches";
+}
+
+<style>
+    body {
+        background-color: #f3e5f5;
+    }
+
+    .branch-card {
+        background: white;
+        border: none;
+        border-radius: 15px;
+        transition: transform 0.3s;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        overflow: hidden;
+    }
+
+        .branch-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+    .map-header {
+        height: 120px;
+        background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); /* خلفية خريطة تخيلية */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: white;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1 class="fw-bold"><i class="fas fa-map-marked-alt text-primary me-2"></i>Branch Locations</h1>
+        <a asp-action="Create" class="btn btn-primary rounded-pill px-4 shadow-sm">
+            <i class="fas fa-plus me-2"></i> New Branch
+        </a>
+    </div>
+
+    <div class="row g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4">
+                <div class="branch-card h-100">
+                    <div class="map-header">
+                        <i class="fas fa-store-alt"></i>
+                    </div>
+                    <div class="card-body text-center p-4">
+                        <h5 class="fw-bold text-dark">@item.Location</h5>
+                        <p class="text-muted small">
+                            <i class="fas fa-utensils me-1 text-warning"></i> @(item.Restaurant?.Name ?? "Main Chain")
+                        </p>
+
+                        <div class="d-flex justify-content-center gap-2 mb-3">
+                            <span class="badge bg-light text-dark border">
+                                <i class="fas fa-pepper-hot me-1 text-danger"></i> @(item.Cuisine?.Name ?? "General")
+                            </span>
+                            <span class="badge bg-light text-dark border">
+                                <i class="fas fa-phone me-1 text-success"></i> @item.PhoneNumber
+                            </span>
+                        </div>
+
+                        <hr class="opacity-25" />
+
+                        <div class="btn-group">
+                            <a asp-action="Edit" asp-route-id="@item.BranchId" class="btn btn-outline-warning btn-sm border-0"><i class="fas fa-edit"></i></a>
+                            <a asp-action="Details" asp-route-id="@item.BranchId" class="btn btn-outline-info btn-sm border-0"><i class="fas fa-info-circle"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.BranchId" class="btn btn-outline-danger btn-sm border-0"><i class="fas fa-trash"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

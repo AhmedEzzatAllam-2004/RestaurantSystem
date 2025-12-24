@@ -1,0 +1,89 @@
+﻿@model RestaurantSystem.Models.Restaurant
+
+@{
+    ViewData["Title"] = "Edit Restaurant";
+}
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .form-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        border: none;
+        overflow: hidden;
+    }
+
+    .form-header {
+        background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); /* لون مختلف للتعديل */
+        padding: 30px;
+        color: #333;
+        text-align: center;
+    }
+
+    .form-floating > label {
+        left: 10px;
+    }
+
+    .form-control:focus {
+        border-color: #ff9a9e;
+        box-shadow: 0 0 0 0.25rem rgba(255, 154, 158, 0.25);
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card form-card">
+
+                <div class="form-header">
+                    <h2 class="fw-bold mb-0"><i class="fas fa-edit me-2"></i>Edit Restaurant</h2>
+                    <p class="mb-0 opacity-75">Update details for @Model.Name</p>
+                </div>
+
+                <div class="card-body p-4 p-md-5">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <input type="hidden" asp-for="RestaurantId" />
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Name" class="form-control rounded-pill px-4" placeholder="Name" />
+                            <label asp-for="Name" class="px-4"><i class="fas fa-utensils me-2"></i>Name</label>
+                            <span asp-validation-for="Name" class="text-danger small ms-3"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Description" class="form-control rounded-pill px-4" placeholder="Description" />
+                            <label asp-for="Description" class="px-4"><i class="fas fa-align-left me-2"></i>Description</label>
+                            <span asp-validation-for="Description" class="text-danger small ms-3"></span>
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <input asp-for="LogoUrl" class="form-control rounded-pill px-4" placeholder="Logo" />
+                            <label asp-for="LogoUrl" class="px-4"><i class="fas fa-image me-2"></i>Logo URL</label>
+                            <span asp-validation-for="LogoUrl" class="text-danger small ms-3"></span>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-warning rounded-pill py-3 fw-bold shadow-sm text-dark">
+                                <i class="fas fa-save me-2"></i> Save Changes
+                            </button>
+                            <a asp-action="Index" class="btn btn-light rounded-pill py-3 fw-bold text-muted border">
+                                <i class="fas fa-times me-2"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

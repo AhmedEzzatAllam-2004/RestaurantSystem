@@ -1,0 +1,188 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<style>
+    /* تنسيقات خاصة للداشبورد */
+    .hero-section {
+        background: linear-gradient(135deg, #0d6efd 0%, #0099ff 100%);
+        border-radius: 20px;
+        padding: 40px;
+        color: white;
+        margin-bottom: 40px;
+        box-shadow: 0 10px 30px rgba(13, 110, 253, 0.2);
+    }
+
+    .stat-card {
+        background: white;
+        border: none;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        transition: transform 0.3s;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+    .icon-box {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+    }
+
+    .quick-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+
+    .action-card {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        text-align: center;
+        border: 1px solid #eee;
+        transition: 0.2s;
+    }
+
+        .action-card:hover {
+            border-color: #0d6efd;
+            background: #f8f9fa;
+        }
+</style>
+
+<div class="container py-4">
+
+    <div class="hero-section d-flex justify-content-between align-items-center">
+        <div>
+            <h1 class="fw-bold display-5">👋 Welcome Back!</h1>
+            <p class="lead mb-0 opacity-75">Here's what's happening in your restaurant today.</p>
+        </div>
+        <div class="d-none d-md-block">
+            <i class="fas fa-chart-line fa-4x opacity-50"></i>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-3 col-sm-6">
+            <div class="stat-card">
+                <div>
+                    <h6 class="text-muted text-uppercase small fw-bold">Total Orders</h6>
+                    <h2 class="fw-bold mb-0">1,254</h2>
+                </div>
+                <div class="icon-box bg-light text-primary">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="stat-card">
+                <div>
+                    <h6 class="text-muted text-uppercase small fw-bold">Revenue</h6>
+                    <h2 class="fw-bold mb-0 text-success">$45k</h2>
+                </div>
+                <div class="icon-box bg-light text-success">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="stat-card">
+                <div>
+                    <h6 class="text-muted text-uppercase small fw-bold">Customers</h6>
+                    <h2 class="fw-bold mb-0">892</h2>
+                </div>
+                <div class="icon-box bg-light text-info">
+                    <i class="fas fa-users"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="stat-card">
+                <div>
+                    <h6 class="text-muted text-uppercase small fw-bold">Items</h6>
+                    <h2 class="fw-bold mb-0">156</h2>
+                </div>
+                <div class="icon-box bg-light text-warning">
+                    <i class="fas fa-hamburger"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="fw-bold mb-4"><i class="fas fa-rocket me-2 text-secondary"></i>Quick Actions</h4>
+    <div class="row g-3">
+
+        <div class="col-md-4 col-sm-6">
+            <a asp-controller="Orders" asp-action="Index" class="quick-link">
+                <div class="action-card">
+                    <i class="fas fa-clipboard-list fa-2x text-primary mb-3"></i>
+                    <h5 class="fw-bold">Manage Orders</h5>
+                    <p class="text-muted small mb-0">View and track incoming orders</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4 col-sm-6">
+            <a asp-controller="MenuItems" asp-action="Index" class="quick-link">
+                <div class="action-card">
+                    <i class="fas fa-utensils fa-2x text-warning mb-3"></i>
+                    <h5 class="fw-bold">Update Menu</h5>
+                    <p class="text-muted small mb-0">Add or edit dishes and prices</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4 col-sm-6">
+            <a asp-controller="Restaurants" asp-action="Index" class="quick-link">
+                <div class="action-card">
+                    <i class="fas fa-store fa-2x text-danger mb-3"></i>
+                    <h5 class="fw-bold">Restaurants</h5>
+                    <p class="text-muted small mb-0">Manage chains and branches</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4 col-sm-6">
+            <a asp-controller="Customers" asp-action="Index" class="quick-link">
+                <div class="action-card">
+                    <i class="fas fa-users fa-2x text-info mb-3"></i>
+                    <h5 class="fw-bold">Customers</h5>
+                    <p class="text-muted small mb-0">View client database</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4 col-sm-6">
+            <a asp-controller="Deliveries" asp-action="Index" class="quick-link">
+                <div class="action-card">
+                    <i class="fas fa-motorcycle fa-2x text-dark mb-3"></i>
+                    <h5 class="fw-bold">Delivery</h5>
+                    <p class="text-muted small mb-0">Track shipments and riders</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4 col-sm-6">
+            <a asp-controller="Payments" asp-action="Index" class="quick-link">
+                <div class="action-card">
+                    <i class="fas fa-file-invoice-dollar fa-2x text-success mb-3"></i>
+                    <h5 class="fw-bold">Payments</h5>
+                    <p class="text-muted small mb-0">Check financial records</p>
+                </div>
+            </a>
+        </div>
+
+    </div>
+</div>

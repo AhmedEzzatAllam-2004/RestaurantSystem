@@ -1,0 +1,124 @@
+﻿@model IEnumerable<RestaurantSystem.Models.Restaurant>
+
+@{
+    ViewData["Title"] = "Restaurants Gallery";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+<style>
+    /* خلفية للصفحة كلها */
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+    }
+
+    /* تصميم الكارت الـ 3D */
+    .restaurant-card {
+        border: none;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.9); /* زجاجي */
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* ضل مبدئي */
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* انيميشن ناعم */
+        overflow: hidden;
+        position: relative;
+        top: 0;
+    }
+
+        /* الحركة لما الماوس ييجي على الكارت */
+        .restaurant-card:hover {
+            transform: translateY(-10px) scale(1.02); /* يطلع لفوق ويكبر سنة */
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2); /* الضل يزيد فيبان 3D */
+            z-index: 10;
+        }
+
+    /* ايقونة اللوجو */
+    .card-img-top-wrapper {
+        height: 150px;
+        background: linear-gradient(45deg, #007bff, #6610f2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .logo-placeholder {
+        font-size: 4rem;
+        color: rgba(255,255,255,0.8);
+    }
+
+    /* زرار الإضافة العائم */
+    .btn-floating {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        z-index: 100;
+        transition: transform 0.3s;
+    }
+
+        .btn-floating:hover {
+            transform: rotate(90deg) scale(1.1);
+        }
+</style>
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-5 animate__animated animate__fadeInDown">
+        <div>
+            <h1 class="fw-bold text-dark">🍽️ Our Restaurants</h1>
+            <p class="text-muted">Discover the best food places in town</p>
+        </div>
+        <a asp-action="Create" class="btn btn-primary btn-lg rounded-pill px-4 shadow-sm">
+            <i class="fas fa-plus-circle me-2"></i> Add New
+        </a>
+    </div>
+
+    <div class="row g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 col-sm-6 animate__animated animate__fadeInUp">
+                <div class="card restaurant-card h-100">
+
+                    <div class="card-img-top-wrapper">
+                        <i class="fas fa-utensils logo-placeholder"></i>
+                    </div>
+
+                    <div class="card-body text-center">
+                        <h3 class="card-title fw-bold text-primary">@item.Name</h3>
+                        <p class="card-text text-secondary">
+                            @(item.Description.Length > 50 ? item.Description.Substring(0, 50) + "..." : item.Description)
+                        </p>
+
+                        <small class="text-muted d-block mb-3">
+                            <i class="fas fa-image"></i> @item.LogoUrl
+                        </small>
+
+                        <div class="d-flex justify-content-center gap-2 mt-3">
+                            <a asp-action="Edit" asp-route-id="@item.RestaurantId" class="btn btn-outline-warning rounded-circle" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a asp-action="Details" asp-route-id="@item.RestaurantId" class="btn btn-outline-info rounded-circle" title="Details">
+                                <i class="fas fa-info"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.RestaurantId" class="btn btn-outline-danger rounded-circle" title="Delete">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<a asp-action="Create" class="btn btn-primary btn-floating animate__animated animate__bounceIn">
+    <i class="fas fa-plus"></i>
+</a>

@@ -1,0 +1,92 @@
+﻿@model RestaurantSystem.Models.Branch
+
+@{
+    ViewData["Title"] = "Edit Branch";
+}
+
+<style>
+    body {
+        background-color: #f3e5f5;
+    }
+
+    .form-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        border: none;
+        overflow: hidden;
+    }
+
+    .form-header {
+        background: linear-gradient(135deg, #da22ff 0%, #9733ee 100%); /* بنفسجي فاتح */
+        padding: 30px;
+        color: white;
+        text-align: center;
+    }
+
+    .form-select {
+        height: 58px;
+        border-radius: 30px;
+        padding-left: 20px;
+    }
+
+    .form-floating > label {
+        left: 10px;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card form-card">
+                <div class="form-header">
+                    <h2 class="fw-bold mb-0"><i class="fas fa-edit me-2"></i>Update Branch</h2>
+                    <p class="mb-0 opacity-75">Modify location details</p>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <input type="hidden" asp-for="BranchId" />
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Location" class="form-control rounded-pill px-4" />
+                            <label asp-for="Location" class="px-4"><i class="fas fa-map-pin me-2"></i>Location</label>
+                            <span asp-validation-for="Location" class="text-danger small ms-3"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="PhoneNumber" class="form-control rounded-pill px-4" />
+                            <label asp-for="PhoneNumber" class="px-4"><i class="fas fa-phone me-2"></i>Phone</label>
+                            <span asp-validation-for="PhoneNumber" class="text-danger small ms-3"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <select asp-for="RestaurantId" class="form-select" asp-items="ViewBag.RestaurantId"></select>
+                            <label asp-for="RestaurantId" class="px-4"><i class="fas fa-utensils me-2"></i>Restaurant</label>
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <select asp-for="CuisineId" class="form-select" asp-items="ViewBag.CuisineId">
+                                <option value="">-- Select Cuisine --</option>
+                            </select>
+                            <label asp-for="CuisineId" class="px-4"><i class="fas fa-pepper-hot me-2"></i>Cuisine</label>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-info text-white rounded-pill py-3 fw-bold shadow-sm">
+                                <i class="fas fa-save me-2"></i> Save Changes
+                            </button>
+                            <a asp-action="Index" class="btn btn-light rounded-pill py-3 fw-bold border">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+ }

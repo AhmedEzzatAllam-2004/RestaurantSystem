@@ -1,0 +1,107 @@
+﻿@model RestaurantSystem.Models.Customer
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - Restaurant System</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .register-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 500px; 
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .register-card::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 8px;
+                background: linear-gradient(90deg, #11998e, #38ef7d); 
+            }
+
+        .form-control {
+            border-radius: 50px;
+            padding: 12px 25px;
+            background: #f1f2f6;
+            border: none;
+            margin-bottom: 15px;
+        }
+
+        .btn-register {
+            border-radius: 50px;
+            padding: 12px;
+            font-weight: bold;
+            width: 100%;
+            background: #11998e;
+            color: white;
+            border: none;
+            transition: 0.3s;
+        }
+
+            .btn-register:hover {
+                background: #0e857b;
+                transform: translateY(-2px);
+            }
+    </style>
+</head>
+<body>
+
+    <div class="register-card">
+        <h3 class="fw-bold mb-1 text-dark">Create Account</h3>
+        <p class="text-muted mb-4">Join us to order delicious food</p>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger p-2 small rounded-pill">@ViewBag.Error</div>
+        }
+
+        <form asp-action="Register" method="post">
+
+            <div class="row">
+                <div class="col-12">
+                    <input asp-for="Name" class="form-control" placeholder="Full Name" required />
+                </div>
+            </div>
+
+            <input asp-for="Email" type="email" class="form-control" placeholder="Email Address" required />
+            <input asp-for="Phone" class="form-control" placeholder="Phone Number" required />
+            <input asp-for="Password" type="password" class="form-control" placeholder="Password" required />
+
+            <button type="submit" class="btn btn-register shadow-sm mt-2">
+                CREATE ACCOUNT
+            </button>
+        </form>
+
+        <div class="mt-4 small">
+            <span>Already have an account? <a asp-action="Login" class="text-success fw-bold text-decoration-none">Login here</a></span>
+        </div>
+    </div>
+
+</body>
+</html>
